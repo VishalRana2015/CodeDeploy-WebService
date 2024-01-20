@@ -33,5 +33,5 @@ phases:
 artifacts:
   files:
     - "target/webService.jar"
-  name: 'webService-artifact'
+  discard-paths: yes
   s3-prefix: codeDeploy
