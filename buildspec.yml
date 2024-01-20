@@ -27,11 +27,14 @@ phases:
   post_build:
     commands:
       - 'echo "post_build phase executing..."'
+      - "echo 'mnv clean package' >> target/deploymentScript.sh"
+      - 'chmod 777 target/deploymentScript.sh'
     finally:
       - 'echo "Taking exit from post_build phase"'
 
 artifacts:
   files:
     - "target/webService.jar"
+    - "target/deploymentScript.sh"
   discard-paths: yes
   s3-prefix: codeDeploy

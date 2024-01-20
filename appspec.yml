@@ -1,0 +1,7 @@
+version: 0.0
+os: linux
+files:
+  - source: webService.jar
+    destination: '/home/ec2-user/server'
+hooks:
+  Before
