@@ -1,0 +1,39 @@
+version: 0.2
+run-as: root
+env:
+  variables:
+    env: 'build'
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+    commands:
+      - 'sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo'
+      - 'sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo'
+      - 'sudo yum install -y apache-maven'
+      - 'mvn –version'
+    finally:
+      - 'echo "Taking exit from install phase"'
+      - 'mvn -version'
+  pre_build:
+    commands:
+      - 'echo "Pre_build phase executing..."'
+    finally:
+      - 'echo "Taking exit from pre_build phase"'
+  build:
+    commands:
+      - 'echo "build phase executing..."'
+      - 'mvn clean package'
+    finally:
+      - 'echo "Taking exit from build phase"'
+  post_build:
+    commands:
+      - 'echo "post_build phase executing..."'
+    finally:
+      - 'echo "Taking exit from post_build phase"'
+
+artifacts:
+  files:
+    - "target/webService.jar"
+  name: 'webService-artifact'
+  s3-prefix: codeDeploy
