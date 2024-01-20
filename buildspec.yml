@@ -36,4 +36,5 @@ artifacts:
   files:
     - "target/webService.jar"
     - "scripts/*"
+    - 'appspec.yml'
   s3-prefix: codeDeploy
