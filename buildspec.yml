@@ -35,6 +35,5 @@ phases:
 artifacts:
   files:
     - "target/webService.jar"
-    - "target/deploymentScript.sh"
-  discard-paths: yes
+    - "scripts/*"
   s3-prefix: codeDeploy

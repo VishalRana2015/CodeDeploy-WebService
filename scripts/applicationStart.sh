@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar webService.jar
+java -jar /home/ec2-user/server/webService.jar

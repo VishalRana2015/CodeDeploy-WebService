@@ -1,7 +1,15 @@
 version: 0.0
 os: linux
 files:
-  - source: webService.jar
+  - source: 'target'
     destination: '/home/ec2-user/server'
+file_exists_behavior: OVERWRITE
 hooks:
-  Before
+  ApplicationStop:
+    - location: 'scripts/applicationStop.sh'
+      timeout: 10
+      runas: root
+  ApplicationStart:
+    - location: 'scripts/applicationStart.sh'
+      timeout: 10
+      runas: root
