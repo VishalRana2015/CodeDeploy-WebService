@@ -8,7 +8,7 @@ phases:
     runtime-versions:
       java: corretto21
     commands:
-      - 'yum update'
+      - 'echo "Install phase executing..."'
       - 'yum install -y maven'
     finally:
       - 'echo "Taking exit from install phase"'
