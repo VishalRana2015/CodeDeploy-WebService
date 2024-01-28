@@ -13,20 +13,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.UUID;
 
 @RestController
 public class DemoController {
 
     @GetMapping("/home")
     public ResponseEntity<String> getHome(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("GET: /home invoked");
+        String uuid = generateUUID();
+        System.out.println("GET: /home invoked - " + uuid);
         printRequestResponse(request, response);
-        return new ResponseEntity<>("GET: /home invoked", HttpStatus.OK);
+        return new ResponseEntity<>("GET: /home invoked" + uuid, HttpStatus.OK);
     }
 
     @PostMapping("/home")
     public ResponseEntity<String> postHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "POST: /home invoked";
+        String uuid = generateUUID();
+        String message = "POST: /home invoked : " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -34,7 +37,8 @@ public class DemoController {
 
     @DeleteMapping("/home")
     public ResponseEntity<String> deleteHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "DELETE: /home invoked";
+        String uuid = generateUUID();
+        String message = "DELETE: /home invoked: " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -42,7 +46,8 @@ public class DemoController {
 
     @PutMapping("/home")
     public ResponseEntity<String> putHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "PUT: /home invoked";
+        String uuid = generateUUID();
+        String message = "PUT: /home invoked: " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -52,7 +57,8 @@ public class DemoController {
     // GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE
     @PatchMapping("/home")
     public ResponseEntity<String> patchHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "PATCH: /home invoked";
+        String uuid = generateUUID();
+        String message = "PATCH: /home invoked: " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -60,7 +66,8 @@ public class DemoController {
 
     @RequestMapping(value = "/home", method= RequestMethod.HEAD)
     public ResponseEntity<String> headHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "HEAD: /home invoked";
+        String uuid = generateUUID();
+        String message = "HEAD: /home invoked: " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK); // any respone will be discarded.
@@ -68,7 +75,8 @@ public class DemoController {
 
     @RequestMapping(value = "/home", method = RequestMethod.OPTIONS)
     public ResponseEntity<String> optionsHome(HttpServletRequest request, HttpServletResponse response){
-        String message = "Options: /home invoked";
+        String uuid = generateUUID();
+        String message = "Options: /home invoked: " + uuid;
         System.out.println(message);
         printRequestResponse(request, response);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -151,5 +159,11 @@ public class DemoController {
     private static void printRequestResponse( HttpServletRequest request, HttpServletResponse response){
         System.out.println(convertHttpRequestToString(request));
         System.out.println(convertHttpResponseToString(response));
+    }
+
+    private static String generateUUID() {
+        UUID uuid = UUID.randomUUID();
+        String uuidString = uuid.toString().replace("-", "");
+        return uuidString;
     }
 }
