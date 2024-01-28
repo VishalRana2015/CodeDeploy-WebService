@@ -23,7 +23,7 @@ public class DemoController {
         String uuid = generateUUID();
         System.out.println("GET: /home invoked - " + uuid);
         printRequestResponse(request, response);
-        return new ResponseEntity<>("GET: /home invoked" + uuid, HttpStatus.OK);
+        return new ResponseEntity<>("GET: /home invoked: " + uuid, HttpStatus.OK);
     }
 
     @PostMapping("/home")
