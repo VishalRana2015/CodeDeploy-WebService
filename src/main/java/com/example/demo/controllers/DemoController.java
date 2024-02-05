@@ -19,15 +19,31 @@ import java.util.UUID;
 public class DemoController {
 
     @GetMapping("/home")
-    public ResponseEntity<String> getHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> getHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         System.out.println("GET: /home invoked - " + uuid);
         printRequestResponse(request, response);
         return new ResponseEntity<>("GET: /home invoked: " + uuid, HttpStatus.OK);
     }
 
+    @GetMapping("/timeout")
+    public ResponseEntity<String> timeout(HttpServletRequest request, HttpServletResponse response) {
+        String uuid = generateUUID();
+        System.out.println("GET: /timeout invoked - " + uuid);
+        int seconds = 0;
+        try {
+            while (true) {
+                Thread.sleep(2000);
+                seconds += 2;
+            }
+        } catch (InterruptedException exp) {
+            System.out.println("Exception cuaght: " + exp.getMessage());
+        }
+        return new ResponseEntity<>("Timeout returning after: " + seconds + ", uuid: " + uuid, HttpStatus.OK);
+    }
+
     @PostMapping("/home")
-    public ResponseEntity<String> postHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> postHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "POST: /home invoked : " + uuid;
         System.out.println(message);
@@ -36,7 +52,7 @@ public class DemoController {
     }
 
     @DeleteMapping("/home")
-    public ResponseEntity<String> deleteHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> deleteHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "DELETE: /home invoked: " + uuid;
         System.out.println(message);
@@ -45,7 +61,7 @@ public class DemoController {
     }
 
     @PutMapping("/home")
-    public ResponseEntity<String> putHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> putHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "PUT: /home invoked: " + uuid;
         System.out.println(message);
@@ -56,7 +72,7 @@ public class DemoController {
 
     // GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE
     @PatchMapping("/home")
-    public ResponseEntity<String> patchHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> patchHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "PATCH: /home invoked: " + uuid;
         System.out.println(message);
@@ -64,8 +80,8 @@ public class DemoController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/home", method= RequestMethod.HEAD)
-    public ResponseEntity<String> headHome(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/home", method = RequestMethod.HEAD)
+    public ResponseEntity<String> headHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "HEAD: /home invoked: " + uuid;
         System.out.println(message);
@@ -74,7 +90,7 @@ public class DemoController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.OPTIONS)
-    public ResponseEntity<String> optionsHome(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> optionsHome(HttpServletRequest request, HttpServletResponse response) {
         String uuid = generateUUID();
         String message = "Options: /home invoked: " + uuid;
         System.out.println(message);
@@ -105,7 +121,7 @@ public class DemoController {
             String[] paramValues = request.getParameterValues(paramName);
             stringBuilder.append(paramName).append(": ").append(String.join(", ", paramValues)).append("\n");
         }
-        stringBuilder.append("-----Body Section -----" ).append("\n");
+        stringBuilder.append("-----Body Section -----").append("\n");
         // Append request body
         try {
             BufferedReader reader = request.getReader();
@@ -156,7 +172,7 @@ public class DemoController {
         return stringBuilder.toString();
     }
 
-    private static void printRequestResponse( HttpServletRequest request, HttpServletResponse response){
+    private static void printRequestResponse(HttpServletRequest request, HttpServletResponse response) {
         System.out.println(convertHttpRequestToString(request));
         System.out.println(convertHttpResponseToString(response));
     }
